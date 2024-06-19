@@ -24,10 +24,49 @@ public class CharacterService {
                 .uri("/character")
                 .retrieve()
                 .body(RickAndMortyResponse.class);
-        if(response != null){
+        if (response != null) {
             return response.results();
+        } else {
+            throw new IOException("No Data Found");
         }
-        else {
+
+    }
+
+    public List<RickAndMortyCharacter> checkIfAliveChars(String status) throws IOException {
+        String uri = "/character?status=" + status;
+        RickAndMortyResponse response = restClient.get()
+                .uri(uri)
+                .retrieve()
+                .body(RickAndMortyResponse.class);
+        if (response != null) {
+            return response.results();
+        } else {
+            throw new IOException("No Data Found");
+        }
+    }
+
+    public RickAndMortyCharacter getCharById(int id) throws IOException {
+        String uri = "/character/" + id;
+        RickAndMortyCharacter response = restClient.get()
+                .uri(uri)
+                .retrieve()
+                .body(RickAndMortyCharacter.class);
+        if (response != null) {
+            return response;
+        } else {
+            throw new IOException("No Data Found");
+        }
+    }
+
+    public int getSpeciesStatistic(String species) throws IOException {
+        String uri = "/character/?status=alive&species=" + species;
+        RickAndMortyResponse response = restClient.get()
+                .uri(uri)
+                .retrieve()
+                .body(RickAndMortyResponse.class);
+        if (response != null) {
+            return response.results().size();
+        } else {
             throw new IOException("No Data Found");
         }
 
