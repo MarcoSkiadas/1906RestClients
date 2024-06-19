@@ -2,6 +2,7 @@ package org.example.restclients1906.Service;
 
 import org.example.restclients1906.Model.RickAndMortyCharacter;
 import org.example.restclients1906.Model.RickAndMortyResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -13,9 +14,9 @@ public class CharacterService {
 
     private final RestClient restClient;
 
-    public CharacterService() {
+    public CharacterService(@Value("${RICK_URL}") String baseUrl) {
         this.restClient = RestClient.builder()
-                .baseUrl("https://rickandmortyapi.com/api")
+                .baseUrl(baseUrl)
                 .build();
     }
 
